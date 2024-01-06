@@ -11,7 +11,7 @@ namespace CosmosOdysseyAPI.Controllers
     public class TravelReservationController : ControllerBase
     {
         private readonly ApiContext _context;
-
+        
         public TravelReservationController(ApiContext context)
         {
             _context = context;

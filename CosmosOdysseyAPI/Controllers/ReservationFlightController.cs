@@ -24,7 +24,7 @@ namespace CosmosOdysseyAPI.Controllers
             return new JsonResult(_context.ReservationFlights.Where(rf => rf.ReservationID == reservationId));
         }
 
-        // POST
+        // POST a new reservation flight to the database
         [HttpPost]
         public JsonResult PostReservationFlight(ReservationFlight reservationFlight)
         {

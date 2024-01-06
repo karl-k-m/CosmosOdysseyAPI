@@ -41,7 +41,7 @@ public class FlightFinder
         {
             foreach (var flight in flights)
             {
-                if (lastArrivalTime == null || flight.DepartureTime > lastArrivalTime.Value.AddMinutes(15))
+                if (lastArrivalTime == null || flight.DepartureTime > lastArrivalTime.Value.AddMinutes(15)) // Minimum layover 15 minutes
                 {
                     currentPath.Add(flight);
                     DepthFirstSearch(flight.Destination, end, visited, currentPath, paths, flight.ArrivalTime);
