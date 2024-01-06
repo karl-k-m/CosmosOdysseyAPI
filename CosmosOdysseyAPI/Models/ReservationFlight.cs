@@ -3,6 +3,9 @@ using CosmosOdysseyAPI.Models;
 
 namespace CosmosOdysseyAPI.Models;
 
+/// <summary>
+/// A flight belonging to a travel reservation.
+/// </summary>
 public class ReservationFlight
 {
     [Key] public int ReservationFlightId { get; set; }  // ReservationFlight identifier

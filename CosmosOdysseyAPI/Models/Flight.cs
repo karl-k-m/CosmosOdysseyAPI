@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CosmosOdysseyAPI.Models;
 
+/// <summary>
+/// A specific flight between two locations, with a specific departure and arrival time.
+/// </summary>
 public class Flight
 {
     [Key] public string FlightID { get; set; }  // Flight identifier

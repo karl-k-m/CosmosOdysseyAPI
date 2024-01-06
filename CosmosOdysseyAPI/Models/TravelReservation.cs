@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CosmosOdysseyAPI.Models;
 
+/// <summary>
+/// A travel reservation made by a client.
+/// </summary>
 public class TravelReservation
 {
     [Key] public string ReservationID { get; set; } // TravelReservation identifier (Human readable CCC-NNNN)
