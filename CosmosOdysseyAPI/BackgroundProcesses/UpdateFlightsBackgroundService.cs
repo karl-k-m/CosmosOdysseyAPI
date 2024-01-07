@@ -4,6 +4,9 @@ using CosmosOdysseyAPI.Data;
 
 namespace CosmosOdysseyAPI.BackgroundProcesses;
 
+/// <summary>
+/// Background service for updating flights from the flights API.
+/// </summary>
 public class UpdateFlightsBackgroundService : BackgroundService
 {
     private class Location
@@ -85,20 +88,21 @@ public class UpdateFlightsBackgroundService : BackgroundService
                     if (response.IsSuccessStatusCode)
                     {
                         var json = await response.Content.ReadAsStringAsync();
-                        var flights = JsonSerializer.Deserialize<Json>(json);
+                        var deserializedJson = JsonSerializer.Deserialize<Json>(json);
 
-                        if (flights.id != _lastProcessedId)
+                        // Only process new data if it is different from the previous data
+                        if (deserializedJson.id != _lastProcessedId)
                         {
                             // Update last processed ID and valid until
-                            _lastProcessedId = flights.id;
-                            _lastProcessedValidUntil = flights.validUntil;
+                            _lastProcessedId = deserializedJson.id;
+                            _lastProcessedValidUntil = deserializedJson.validUntil;
                             
                             // Remove all flights from the database
                             _context.Flights.RemoveRange(_context.Flights);
                             await _context.SaveChangesAsync();
                             
                             // Process json and add flights to the database
-                            foreach (var route in flights.legs)
+                            foreach (var route in deserializedJson.legs)
                             {
                                 foreach (var flight in route.providers)
                                 {
@@ -120,7 +124,7 @@ public class UpdateFlightsBackgroundService : BackgroundService
                                 }
                             }
                             await _context.SaveChangesAsync();
-                            _logger.LogInformation("Successfully fetched flights from flights API, valid until {validUntil}", flights.validUntil.ToString("yyyy-MM-dd HH:mm:ss"));
+                            _logger.LogInformation("Successfully fetched flights from flights API, valid until {validUntil}", deserializedJson.validUntil.ToString("yyyy-MM-dd HH:mm:ss"));
                         }
                     }
                     
