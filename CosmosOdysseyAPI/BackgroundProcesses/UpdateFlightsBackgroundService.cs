@@ -72,7 +72,7 @@ public class UpdateFlightsBackgroundService : BackgroundService
                 var _context = scope.ServiceProvider.GetRequiredService<ApiContext>();
                 
                 // Only fetch new data if previous data is no longer valid
-                if (DateTime.Now > _lastProcessedValidUntil)
+                if (DateTime.UtcNow > _lastProcessedValidUntil)
                 { 
                     var request = new HttpRequestMessage(HttpMethod.Get, "https://cosmos-odyssey.azurewebsites.net/api/v1.0/TravelPrices");
                     request.Headers.Add("Accept", "application/json");
@@ -110,6 +110,7 @@ public class UpdateFlightsBackgroundService : BackgroundService
                                         Origin = route.routeInfo.from.name,
                                         Destination = route.routeInfo.to.name,
                                         Distance = route.routeInfo.distance,
+                                        Price = flight.price,
                                         DepartureTime = flight.flightStart,
                                         ArrivalTime = flight.flightEnd
                                     };
@@ -128,8 +129,8 @@ public class UpdateFlightsBackgroundService : BackgroundService
                         _logger.LogError("Error fetching flights from flights API, status code {statusCode}", response.StatusCode);
                     }
                     
-                    // If previous data is no longer valid, try to fetch new data every 30 minutes
-                    await Task.Delay(TimeSpan.FromMinutes(30), stoppingToken);
+                    // If previous data is no longer valid, try to fetch new data every 5 minutes
+                    await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
                 }
             }
         }
