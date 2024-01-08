@@ -116,15 +116,15 @@ public class UpdateFlightsBackgroundService : BackgroundService
                             }
                             
                             // Remove flights with a validity counter of 15 or more
-                            _logger.LogInformation("Removing {count} flights", _context.Flights.Count(f => f.ValidityCounter >= 15));
+                            _logger.LogInformation("Removing {count} old flights", _context.Flights.Count(f => f.ValidityCounter >= 15));
                             _context.Flights.RemoveRange(_context.Flights.Where(f => f.ValidityCounter >= 15));
                             
                             // Remove ReservationFlights with a validity counter of 15 or more
-                            _logger.LogInformation("Removing {count} ReservationFlights", _context.ReservationFlights.Count(rf => rf.ValidityCounter >= 15));
+                            _logger.LogInformation("Removing {count} old ReservationFlights", _context.ReservationFlights.Count(rf => rf.ValidityCounter >= 15));
                             _context.ReservationFlights.RemoveRange(_context.ReservationFlights.Where(rf => rf.ValidityCounter >= 15));
                             
                             // Remove TravelReservations with a validity counter of 15 or more
-                            _logger.LogInformation("Removing {count} TravelReservations", _context.TravelReservations.Count(tr => tr.ValidityCounter >= 15));
+                            _logger.LogInformation("Removing {count} old TravelReservations", _context.TravelReservations.Count(tr => tr.ValidityCounter >= 15));
                             _context.TravelReservations.RemoveRange(_context.TravelReservations.Where(tr => tr.ValidityCounter >= 15));
                             
                             // Process json and add flights to the database
