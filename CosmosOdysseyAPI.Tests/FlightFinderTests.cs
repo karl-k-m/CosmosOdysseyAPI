@@ -15,7 +15,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "1",
-                    RouteID = "1",
                     CompanyName = "SpaceX",
                     Origin = "Earth",
                     Destination = "Moon",
@@ -26,7 +25,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "2",
-                    RouteID = "2",
                     CompanyName = "SpaceX",
                     Origin = "Moon",
                     Destination = "Mars",
@@ -37,7 +35,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "3",
-                    RouteID = "3",
                     CompanyName = "SpaceX",
                     Origin = "Earth",
                     Destination = "Jupiter",
@@ -48,7 +45,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "4",
-                    RouteID = "4",
                     CompanyName = "SpaceX",
                     Origin = "Jupiter",
                     Destination = "Moon",
@@ -59,7 +55,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "5",
-                    RouteID = "5",
                     CompanyName = "SpaceX",
                     Origin = "Saturn",
                     Destination = "Earth",
@@ -89,7 +84,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "1",
-                    RouteID = "1",
                     CompanyName = "SpaceX",
                     Origin = "Earth",
                     Destination = "Moon",
@@ -100,7 +94,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "3",
-                    RouteID = "3",
                     CompanyName = "SpaceX",
                     Origin = "Earth",
                     Destination = "Jupiter",
@@ -111,7 +104,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "4",
-                    RouteID = "4",
                     CompanyName = "SpaceX",
                     Origin = "Jupiter",
                     Destination = "Moon",
@@ -122,7 +114,6 @@ public class FlightFinderTests
                 new Flight
                 {
                     FlightID = "5",
-                    RouteID = "5",
                     CompanyName = "SpaceX",
                     Origin = "Jupiter",
                     Destination = "Moon",

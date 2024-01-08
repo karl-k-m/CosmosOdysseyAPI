@@ -64,7 +64,7 @@ public class UpdateFlightsBackgroundService : BackgroundService
     }
 
     private string _lastProcessedId = null;                         // ID of the last processed JSON
-    private DateTime _lastProcessedValidUntil = DateTime.MinValue;  // Valid until of the last processed JSON
+    private DateTime _lastProcessedValidUntil = DateTime.MinValue;  // validUntil of the last processed JSON
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -97,9 +97,14 @@ public class UpdateFlightsBackgroundService : BackgroundService
                             _lastProcessedId = deserializedJson.id;
                             _lastProcessedValidUntil = deserializedJson.validUntil;
                             
-                            // Remove all flights from the database
-                            _context.Flights.RemoveRange(_context.Flights);
-                            await _context.SaveChangesAsync();
+                            // Add to validity counter for all flights
+                            foreach (var flight in _context.Flights)
+                            {
+                                flight.ValidityCounter++;
+                            }
+                            
+                            // Remove flights with a validity counter of 15 or more
+                            _context.Flights.RemoveRange(_context.Flights.Where(f => f.ValidityCounter >= 15));
                             
                             // Process json and add flights to the database
                             foreach (var route in deserializedJson.legs)
@@ -109,17 +114,17 @@ public class UpdateFlightsBackgroundService : BackgroundService
                                     var newFlight = new Flight
                                     {
                                         FlightID = flight.id,
-                                        RouteID = route.id,
                                         CompanyName = flight.company.name,
                                         Origin = route.routeInfo.from.name,
                                         Destination = route.routeInfo.to.name,
                                         Distance = route.routeInfo.distance,
                                         Price = flight.price,
                                         DepartureTime = flight.flightStart,
-                                        ArrivalTime = flight.flightEnd
+                                        ArrivalTime = flight.flightEnd,
+                                        ValidUntil = deserializedJson.validUntil,
+                                        ValidityCounter = 0
                                     };
                                     
-                                    var existingFlight = await _context.Flights.FindAsync(newFlight.FlightID);
                                     _context.Flights.Add(newFlight);
                                 }
                             }
