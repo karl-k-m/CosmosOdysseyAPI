@@ -103,8 +103,29 @@ public class UpdateFlightsBackgroundService : BackgroundService
                                 flight.ValidityCounter++;
                             }
                             
+                            // Add to validity counter for all ReservationFlights
+                            foreach (var reservationFlight in _context.ReservationFlights)
+                            {
+                                reservationFlight.ValidityCounter++;
+                            }
+                            
+                            // Add to validity counter for all TravelReservations
+                            foreach (var travelReservation in _context.TravelReservations)
+                            {
+                                travelReservation.ValidityCounter++;
+                            }
+                            
                             // Remove flights with a validity counter of 15 or more
+                            _logger.LogInformation("Removing {count} flights", _context.Flights.Count(f => f.ValidityCounter >= 15));
                             _context.Flights.RemoveRange(_context.Flights.Where(f => f.ValidityCounter >= 15));
+                            
+                            // Remove ReservationFlights with a validity counter of 15 or more
+                            _logger.LogInformation("Removing {count} ReservationFlights", _context.ReservationFlights.Count(rf => rf.ValidityCounter >= 15));
+                            _context.ReservationFlights.RemoveRange(_context.ReservationFlights.Where(rf => rf.ValidityCounter >= 15));
+                            
+                            // Remove TravelReservations with a validity counter of 15 or more
+                            _logger.LogInformation("Removing {count} TravelReservations", _context.TravelReservations.Count(tr => tr.ValidityCounter >= 15));
+                            _context.TravelReservations.RemoveRange(_context.TravelReservations.Where(tr => tr.ValidityCounter >= 15));
                             
                             // Process json and add flights to the database
                             foreach (var route in deserializedJson.legs)
@@ -129,7 +150,7 @@ public class UpdateFlightsBackgroundService : BackgroundService
                                 }
                             }
                             await _context.SaveChangesAsync();
-                            _logger.LogInformation("Successfully fetched flights from flights API, valid until {validUntil}", deserializedJson.validUntil.ToString("yyyy-MM-dd HH:mm:ss"));
+                            _logger.LogInformation("Added {count} new flights with a validUntil of {validUntil} UTC", _context.Flights.Count(f => f.ValidityCounter == 0), deserializedJson.validUntil.ToString("yyyy-MM-dd HH:mm:ss"));
                         }
                     }
                     

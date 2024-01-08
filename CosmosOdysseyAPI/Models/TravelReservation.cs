@@ -15,4 +15,6 @@ public class TravelReservation
     public long Distance { get; set; }              // Distance between origin and destination (km)
     public long Duration { get; set; }              // Duration of the trip (hours)
     public decimal Price { get; set; }              // Price of the trip
+    
+    public int ValidityCounter { get; set; }        // Internal counter for removing old TravelReservations
 }
