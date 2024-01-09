@@ -10,6 +10,6 @@ public class ReservationFlight
 {
     [Key] public int ReservationFlightId { get; set; }  // ReservationFlight identifier
     public string ReservationID { get; set; }           // TravelReservation identifier
-    public string FlightId { get; set; }                // Flight identifier
+    public string FlightID { get; set; }                // Flight identifier
     public int ValidityCounter { get; set; }            // Internal counter for removing old ReservationFlights
 }

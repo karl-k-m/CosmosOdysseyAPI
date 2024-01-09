@@ -127,7 +127,7 @@ public class UpdateFlightsBackgroundService : BackgroundService
                             _logger.LogInformation("Removing {count} old TravelReservations", _context.TravelReservations.Count(tr => tr.ValidityCounter >= 15));
                             _context.TravelReservations.RemoveRange(_context.TravelReservations.Where(tr => tr.ValidityCounter >= 15));
                             
-                            // Process json and add flights to the database
+                            // Add flights to the database
                             foreach (var route in deserializedJson.legs)
                             {
                                 foreach (var flight in route.providers)
@@ -163,6 +163,8 @@ public class UpdateFlightsBackgroundService : BackgroundService
                     await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
                 }
             }
+            // If previous data is still valid, retry after 5 seconds (my PC was making noises akin to a jet engine)
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
         }
     }
 }
