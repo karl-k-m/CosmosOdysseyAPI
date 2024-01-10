@@ -9,7 +9,6 @@ public class FlightFinder
     
     public FlightFinder(IEnumerable<Flight> flights)
     {
-        // Initialize the flights from each origin
         _flightsFromOrigin = flights
             .GroupBy(f => f.Origin)
             .ToDictionary(g => g.Key, g => g.ToList());
@@ -49,12 +48,12 @@ public class FlightFinder
 
         if (visited.Contains(current))
         {
-            // Already visited this planet in the current path
+            // Already visited this planet in the current path, kill this branch
             return;
         }
 
         visited.Add(current);
-
+        
         if (_flightsFromOrigin.TryGetValue(current, out var flights))
         {
             foreach (var flight in flights)

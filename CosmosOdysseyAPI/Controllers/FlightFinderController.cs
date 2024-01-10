@@ -22,9 +22,12 @@ namespace CosmosOdysseyAPI.Controllers
         [HttpGet]
         public JsonResult GetPaths(string startLoc, string endLoc)
         {
+            // Only consider flights which are part of the current pricelist
             var flights = _context.Flights.Where(f => f.ValidityCounter == 0).ToListAsync().Result;
+            
             FlightFinder finder = new FlightFinder(flights);
             var paths = finder.FindAllPaths(startLoc, endLoc);
+            
             return new JsonResult(paths);
         }
     }
