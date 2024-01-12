@@ -2,13 +2,14 @@ using CosmosOdysseyAPI.BackgroundProcesses;
 using CosmosOdysseyAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore.Design;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHostedService<UpdateFlightsBackgroundService>();
 builder.Services.AddHttpClient();
-builder.Services.AddDbContext<ApiContext>(options => options.UseInMemoryDatabase("CosmosOdysseyDB"));
+builder.Services.AddDbContext<ApiContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add controllers here
 builder.Services.AddControllers();

@@ -9,4 +9,7 @@ public class ApiContext : DbContext
     public DbSet<Flight> Flights { get; set; }
     public DbSet<TravelReservation> TravelReservations { get; set; }
     public DbSet<ReservationFlight> ReservationFlights { get; set; }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseNpgsql(@"Host=cosmosodyssey.postgres.database.azure.com;Username=postgresql;Password=dH4G^CG&%@t#CwkkaV!a;Database=cosmosodyssey");
 }
