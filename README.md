@@ -29,7 +29,7 @@ There are a few issues which are known to me which I have not addressed at this 
 # Deployment
 
 For my end, this project is deployed as follows:  
-**Front End** - Front end is deployed on Github Pages (https://karl-k-m.github.io/cosmosodyssey/)
+**Front End** - Front end is deployed on Github Pages (https://karl-k-m.github.io/cosmosodyssey/)  
 **Back End** - Back end is composed of a PostgreSQL database and the actual API, both of which are hosted on Azure. The website is quite slow because I'm using the cheapest plan available.
 
 To deploy this webapp, you should do as follows:  
