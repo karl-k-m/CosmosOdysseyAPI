@@ -22,7 +22,7 @@ I have purposefully ignored the "id" feature for all json attributes except flig
 
 ## Issues
 There are a few issues which are known to me which I have not addressed at this time. They are as follows:  
-* Request validation is done in the front-end. With regard to the scope of this project I didn't see it as directly necessary to implement it in the back-end.
+* Request validation is done only in the front-end.
 * Exception handling is spotty.
 * I have not implemented a rate limit.
 
